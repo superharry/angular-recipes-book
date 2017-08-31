@@ -1,0 +1,34 @@
+<div class="row justify-content-md-center">
+  <div class="col col-sm-4">
+    <div class="card text-white bg-dark mb-3">
+      <div class="card-header">New Shopping List Item</div>
+      <div class="card-body">
+        <app-new-shopping-item (onAdded)="addItem($event)"></app-new-shopping-item>
+      </div>
+    </div>
+  </div>
+  <div class="col col-sm-5">
+    <div *ngFor="let item of shoppingList$ | async" class="card">
+      <div class="card-body clearfix">
+        <span class="badge badge-pill badge-success">{{ item.amount }}</span> <strong>{{ item.ingredient.name }}</strong>
+        <button class="btn btn-sm btn-danger float-right" (click)="open(deleteConfirmTemplate, item)">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #deleteConfirmTemplate let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm your action</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to remove this shopping item?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('cancelled')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="c('confirmed')">Confirm</button>
+  </div>
+</ng-template>

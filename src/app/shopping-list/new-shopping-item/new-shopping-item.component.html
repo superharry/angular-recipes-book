@@ -1,0 +1,21 @@
+<div>
+  <form [formGroup]="form" novalidate>
+
+    <div class="form-row">
+      <div class="col-sm-5">
+        <input formControlName="ingredientName" [ngbTypeahead]="suggestIngredients" type="text" class="form-control" placeholder="Ingredient" aria-label="Image URL">
+        <small class="form-text text-success" *ngIf="ingredientName.valid">
+          <i class="fa fa-check-circle-o" aria-hidden="true"></i> Good
+        </small>
+      </div>
+      <div class="col-sm-4">
+        <input formControlName="amount" type="number" class="form-control" placeholder="Amount" aria-label="Image URL">
+        <small class="form-text text-success" *ngIf="amount.valid">
+          <i class="fa fa-check-circle-o" aria-hidden="true"></i> Good
+        </small>
+      </div>
+      <div class="col-sm-1"><button class="btn btn-primary" (click)="onAdd()" [disabled]="!form.valid">Add</button></div>
+    </div>
+
+  </form>
+</div>

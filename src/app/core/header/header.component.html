@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <a class="navbar-brand" [routerLink]="['recipes']" >Angular Recipes Book</a>
+  <div class="navbar-nav mr-auto">
+    <a [routerLink]="['recipes']" class="nav-item nav-link">
+      <i class="fa fa-book" aria-hidden="true"></i>
+      Recipes
+    </a>
+    <a [routerLink]="['shopping']" class="nav-item nav-link">
+      <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+      Shopping List
+    </a>
+  </div>
+  <div class="navbar-nav">
+    <div ngbDropdown class="nav-item">
+      <a class="nav-link" ngbDropdownToggle>
+        <span *ngIf="authService.isAuthenticated() | async">
+          {{ authService.getEmail() | async }}
+        </span>
+        <span *ngIf="!(authService.isAuthenticated() | async)">
+          Account Options
+        </span>
+      </a>
+      <div ngbDropdownMenu>
+        <a *ngIf="!(authService.isAuthenticated() | async)" class="dropdown-item" [routerLink]="['signup']">Sign Up</a>
+        <a *ngIf="!(authService.isAuthenticated() | async)" class="dropdown-item" [routerLink]="['signin']">Sign In</a>
+        <a *ngIf="authService.isAuthenticated() | async" class="dropdown-item" (click)="onLogout()">Log Out</a>
+      </div>
+    </div>
+    <div ngbDropdown class="nav-item" *ngIf="authService.isAuthenticated() | async">
+    <a class="nav-link" ngbDropdownToggle><i class="fa fa-floppy-o" aria-hidden="true"></i> Data Options
+      </a>
+      <div ngbDropdownMenu>
+        <a class="dropdown-item" (click)="onSaveData()">Save Data</a>
+        <a class="dropdown-item" (click)="onLoadData()">Load Data</a>
+      </div>
+    </div>
+  </div>
+</nav>

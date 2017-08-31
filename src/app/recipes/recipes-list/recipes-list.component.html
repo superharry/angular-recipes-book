@@ -1,0 +1,10 @@
+<div>
+	<div class="card-columns" style="margin-top: 20px">
+		<app-recipe-card *ngFor="let recipe of recipes$ | async" [recipe]="recipe"></app-recipe-card>
+    <div class="card bg-light">
+      <div class="card-body">
+        <button class="btn btn-info" [routerLink]="['/recipe', 'new', 'edit' ]">Create New Recipe</button>
+      </div>
+    </div>
+  </div>
+</div>

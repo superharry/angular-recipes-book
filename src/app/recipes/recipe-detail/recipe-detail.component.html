@@ -1,0 +1,52 @@
+<div class="row justify-content-md-center">
+  <div class="col col-sm-8">
+    <div class="card">
+      <img class="card-img-top" [src]="recipe.imageURL" alt="Card image cap">
+      <div class="card-header">
+        <strong>{{ recipe.name }}</strong>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Ingredients</h5>
+        <div class="card-text">
+          <ul>
+            <li *ngFor="let item of recipe.shoppingItems"><span class="badge badge-pill badge-success">{{ item.amount }}</span> {{ item.ingredient.name }}</li>
+          </ul>
+        </div>
+        <h5 class="card-title">Steps</h5>
+        <div class="card-text" style="padding-left: 15px;">
+          {{ recipe.steps }}
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary" (click)="onShop()">
+          <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+          <span>Shop</span>
+        </button>
+        <button type="button" class="btn btn-secondary" [routerLink]="['edit']">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          <span>Edit</span>
+        </button>
+        <button type="button" class="btn btn-danger" (click)="open(deleteConfirmTemplate)">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+          <span>Delete</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #deleteConfirmTemplate let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm your action</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this recipe?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('cancelled')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="c('confirmed')">Confirm</button>
+  </div>
+</ng-template>

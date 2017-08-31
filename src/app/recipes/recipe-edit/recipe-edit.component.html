@@ -1,0 +1,69 @@
+<div class="row justify-content-md-center">
+
+  <div class="col col-sm-4">
+    <div class="card text-white bg-dark mb-3">
+      <div class="card-header">Editing Recipe</div>
+      <div class="card-body">
+        <div class="card-text">Type in necessary information; instant preview available. Don't forget to click
+          <strong>Save</strong> or <strong>Cancel</strong> at the end.</div>
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn btn-sm btn-primary" (click)="onSaveRecipe()" [disabled]="!recipeForm.valid">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            <span>Save</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-info" (click)="onReset()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+            <span>Reset</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary" (click)="onCancel()">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col col-sm-8">
+
+    <form [formGroup]="recipeForm" novalidate>
+        <div class="card">
+          <img *ngIf="imageURL.value && imageURL.valid"  class="card-img-top" [src]="imageURL.value" alt="Card image cap">
+          <div class="card-header">
+            <strong *ngIf="name.value && name.valid">{{ name.value }}</strong>
+            <input placeholder="Recipe Name" formControlName="name" type="text" class="form-control">
+            <small class="form-text text-muted"><i *ngIf="name.valid" class="text-success fa fa-check-circle-o" aria-hidden="true"></i> Required, 3 to 50 characters.</small>
+            <input placeholder="Image URL" formControlName="imageURL" type="text" class="form-control" placeholder="Image URL" aria-label="Image URL">
+            <small class="form-text text-muted"><i *ngIf="imageURL.valid" class="text-success fa fa-check-circle-o" aria-hidden="true"></i> Required; must be valid url.</small>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Ingredients</h5>
+              <div formArrayName="ingredients" class="card-text">
+                <div class="form-row" *ngFor="let ingredientCtrl of ingredients.controls; let i=index" [formGroupName]="i">
+                  <div class="col-md-5">
+                    <input class="form-control" formControlName="ingredientName">
+                    <small class="form-text text-muted"><i *ngIf="ingredientCtrl.get('ingredientName').valid" class="text-success fa fa-check-circle-o" aria-hidden="true"></i> Required, 3 to 50 characters</small>
+                  </div>
+                  <div class="col-md-1">
+                    <input class="form-control" formControlName="amount">
+                    <small class="form-text text-muted"><i *ngIf="ingredientCtrl.get('amount').valid" class="text-success fa fa-check-circle-o" aria-hidden="true"></i> 1~50</small>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-sm btn-secondary" (click)="onRemove(i)">Remove</button>
+                  </div>
+                </div>
+              </div> 
+              <h5 class="card-title">Add Ingredient</h5>
+                <div class="card-text">
+                  <app-new-shopping-item (onAdded)="addItem($event)"></app-new-shopping-item>
+                </div>
+                <h5 class="card-title">Steps</h5>
+                <div class="card-text" style="padding-left: 15px;">
+                  <textarea formControlName="steps" style="width: 100%" class="form-control" placeholder="Describe steps"></textarea>
+                  <small class="form-text text-muted"><i *ngIf="steps.valid" class="text-success fa fa-check-circle-o" aria-hidden="true"></i> Required, 3 to 150 characters.</small>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
